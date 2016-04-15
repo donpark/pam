@@ -29,8 +29,8 @@ func (h Handle) GetUser() (string, error) {
 	var usr *C.char
 	e := C.pam_get_user(h.pamh, &usr, nil)
 
-	if e != Success {
+	if Value(e) != Success {
 		return C.GoString(usr), nil
 	}
-	return nil, pamError{h.pamh, e}
+	return "", pamError{h.pamh, e}
 }
