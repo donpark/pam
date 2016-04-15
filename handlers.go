@@ -35,11 +35,11 @@ func RegisterAuthHandler(handle AuthHandler) {
 }
 
 // RegisterPasswordHandler registers our handler for interacting with PAM
-func RegisterPasswordHandler(handle PasswordHandler) error {
+func RegisterPasswordHandler(handle PasswordHandler) {
 	handlers.password = handle
 }
 
 // RegisterSessionHandler registers our handler for interacting with PAM
-func RegisterSessionHandler(handle SessionHandler) error {
+func RegisterSessionHandler(handle SessionHandler) {
 	handlers.session = handle
 }
