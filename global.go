@@ -13,12 +13,6 @@ type Flags C.int
 // Value is used for return values to/from PAM
 type Value C.int
 
-// Handle wraps our pam_handle_t for method attachment
-type Handle struct {
-	pamh  *C.pam_handle_t
-	Flags Flags
-}
-
 const (
 	ChangeExpiredAuthToken Flags = C.PAM_CHANGE_EXPIRED_AUTHTOK
 	DeleteCredential       Flags = C.PAM_DELETE_CRED
