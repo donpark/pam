@@ -8,40 +8,40 @@ import "unsafe"
 import "C"
 
 // Flags are PAM related flags
-type Flags C.int
+type Flags int
 
 // Value is used for return values to/from PAM
-type Value C.int
+type Value int
 
 const (
-	ChangeExpiredAuthToken Flags = C.PAM_CHANGE_EXPIRED_AUTHTOK
-	DeleteCredential       Flags = C.PAM_DELETE_CRED
-	DisallowNullAuthToken  Flags = C.PAM_DISALLOW_NULL_AUTHTOK
-	EstablishCredential    Flags = C.PAM_ESTABLISH_CRED
-	PrelimCheck            Flags = C.PAM_PRELIM_CHECK
-	RefreshCredential      Flags = C.PAM_REFRESH_CRED
-	ReinitializeCredential Flags = C.PAM_REINITIALIZE_CRED
-	Silent                 Flags = C.PAM_SILENT
-	UpdateAuthToken        Flags = C.PAM_UPDATE_AUTHTOK
+	ChangeExpiredAuthToken = Flags(C.PAM_CHANGE_EXPIRED_AUTHTOK)
+	DeleteCredential       = Flags(C.PAM_DELETE_CRED)
+	DisallowNullAuthToken  = Flags(C.PAM_DISALLOW_NULL_AUTHTOK)
+	EstablishCredential    = Flags(C.PAM_ESTABLISH_CRED)
+	PrelimCheck            = Flags(C.PAM_PRELIM_CHECK)
+	RefreshCredential      = Flags(C.PAM_REFRESH_CRED)
+	ReinitializeCredential = Flags(C.PAM_REINITIALIZE_CRED)
+	Silent                 = Flags(C.PAM_SILENT)
+	UpdateAuthToken        = Flags(C.PAM_UPDATE_AUTHTOK)
 
-	AccountExpired         Value = C.PAM_ACCT_EXPIRED
-	AuthError              Value = C.PAM_AUTH_ERR
-	AuthInfoUnavailable    Value = C.PAM_AUTHINFO_UNAVAIL
-	AuthTokenDisableAging  Value = C.PAM_AUTHTOK_DISABLE_AGING
-	AuthTokenError         Value = C.PAM_AUTHTOK_ERR
-	AuthTokenLockBusy      Value = C.PAM_AUTHTOK_LOCK_BUSY
-	AuthTokenRecoveryError Value = C.PAM_AUTHTOK_RECOVERY_ERR
-	CredentialError        Value = C.PAM_CRED_ERR
-	CredentialExpired      Value = C.PAM_CRED_EXPIRED
-	CredentialInsufficient Value = C.PAM_CRED_INSUFFICIENT
-	CredentialUnavailable  Value = C.PAM_CRED_UNAVAIL
-	MaxTries               Value = C.PAM_MAXTRIES
-	NewAuthTokenRequired   Value = C.PAM_NEW_AUTHTOK_REQD
-	PermissionDenied       Value = C.PAM_PERM_DENIED
-	SessionError           Value = C.PAM_SESSION_ERR
-	Success                Value = C.PAM_SUCCESS
-	TryAgain               Value = C.PAM_TRY_AGAIN
-	UserUnknown            Value = C.PAM_USER_UNKNOWN
+	AccountExpired         = Value(C.PAM_ACCT_EXPIRED)
+	AuthError              = Value(C.PAM_AUTH_ERR)
+	AuthInfoUnavailable    = Value(C.PAM_AUTHINFO_UNAVAIL)
+	AuthTokenDisableAging  = Value(C.PAM_AUTHTOK_DISABLE_AGING)
+	AuthTokenError         = Value(C.PAM_AUTHTOK_ERR)
+	AuthTokenLockBusy      = Value(C.PAM_AUTHTOK_LOCK_BUSY)
+	AuthTokenRecoveryError = Value(C.PAM_AUTHTOK_RECOVERY_ERR)
+	CredentialError        = Value(C.PAM_CRED_ERR)
+	CredentialExpired      = Value(C.PAM_CRED_EXPIRED)
+	CredentialInsufficient = Value(C.PAM_CRED_INSUFFICIENT)
+	CredentialUnavailable  = Value(C.PAM_CRED_UNAVAIL)
+	MaxTries               = Value(C.PAM_MAXTRIES)
+	NewAuthTokenRequired   = Value(C.PAM_NEW_AUTHTOK_REQD)
+	PermissionDenied       = Value(C.PAM_PERM_DENIED)
+	SessionError           = Value(C.PAM_SESSION_ERR)
+	Success                = Value(C.PAM_SUCCESS)
+	TryAgain               = Value(C.PAM_TRY_AGAIN)
+	UserUnknown            = Value(C.PAM_USER_UNKNOWN)
 )
 
 var handlers = struct {
