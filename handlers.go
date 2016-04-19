@@ -4,24 +4,24 @@ import "C"
 
 // AccountHandler is our `account` service interface for interacting with PAM as a module
 type AccountHandler interface {
-	Validate(Handle, []string) Value
+	Validate(Handle, Args) Value
 }
 
 // AuthHandler is our `auth` service interface for interacting with PAM as a module
 type AuthHandler interface {
-	Authenticate(Handle, []string) Value
-	SetCredential(Handle, []string) Value
+	Authenticate(Handle, Args) Value
+	SetCredential(Handle, Args) Value
 }
 
 // PasswordHandler is our `password` service interface for interacting with PAM as a module
 type PasswordHandler interface {
-	ChangeAuthToken(Handle, []string) Value
+	ChangeAuthToken(Handle, Args) Value
 }
 
 // SessionHandler is our `session` service interface for interacting with PAM as a module
 type SessionHandler interface {
-	Open(Handle, []string) Value
-	Close(Handle, []string) Value
+	Open(Handle, Args) Value
+	Close(Handle, Args) Value
 }
 
 // RegisterAccountHandler registers our handler for interacting with PAM

@@ -1,6 +1,9 @@
 package pam
 
-import "unsafe"
+import (
+	"strings"
+	"unsafe"
+)
 
 /*
 #include <security/pam_modules.h>
@@ -12,6 +15,9 @@ type Flags int
 
 // Value is used for return values to/from PAM
 type Value int
+
+// Args is what we store are broken out arguments in
+type Args map[string]string
 
 const (
 	ChangeExpiredAuthToken = Flags(C.PAM_CHANGE_EXPIRED_AUTHTOK)
@@ -59,38 +65,48 @@ var handlers = struct {
 // null handler for defaulting all our pam hooks
 type nullHandler struct{}
 
-func (h nullHandler) Validate(hdl Handle, args []string) Value {
+func (h nullHandler) Validate(hdl Handle, args Args) Value {
 	return AuthError
 }
 
-func (h nullHandler) Authenticate(hdl Handle, args []string) Value {
+func (h nullHandler) Authenticate(hdl Handle, args Args) Value {
 	return AuthInfoUnavailable
 }
 
-func (h nullHandler) SetCredential(hdl Handle, args []string) Value {
+func (h nullHandler) SetCredential(hdl Handle, args Args) Value {
 	return CredentialUnavailable
 }
 
-func (h nullHandler) Open(hdl Handle, args []string) Value {
+func (h nullHandler) Open(hdl Handle, args Args) Value {
 	return SessionError
 }
 
-func (h nullHandler) Close(hdl Handle, args []string) Value {
+func (h nullHandler) Close(hdl Handle, args Args) Value {
 	return SessionError
 }
 
-func (h nullHandler) ChangeAuthToken(hdl Handle, args []string) Value {
+func (h nullHandler) ChangeAuthToken(hdl Handle, args Args) Value {
 	return AuthTokenError
 }
 
+func (a Args) add(arg string) {
+	spl := strings.SplitN(arg, "=", 2)
+	key, arg := spl[0], ""
+	if len(spl) == 2 {
+		arg = spl[1]
+	}
+
+	a[key] = arg
+}
+
 // turns our wonderful **C.char into []string
-func translateArguments(argc C.int, argv **C.char) []string {
+func translateArguments(argc C.int, argv **C.char) Args {
 	length := int(argc)
 	ptrSlice := (*[1 << 30]*C.char)(unsafe.Pointer(argv))[:length:length]
-	ret := make([]string, length)
+	ret := Args{}
 
-	for i, ptr := range ptrSlice {
-		ret[i] = C.GoString(ptr)
+	for _, ptr := range ptrSlice {
+		ret.add(C.GoString(ptr))
 	}
 	return ret
 }
