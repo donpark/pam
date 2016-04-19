@@ -16,6 +16,9 @@ type Flags int
 // Value is used for return values to/from PAM
 type Value int
 
+// Item represents the pam item flag
+type Item int
+
 // Args is what we store are broken out arguments in
 type Args map[string]string
 
@@ -48,6 +51,15 @@ const (
 	Success                = Value(C.PAM_SUCCESS)
 	TryAgain               = Value(C.PAM_TRY_AGAIN)
 	UserUnknown            = Value(C.PAM_USER_UNKNOWN)
+
+	Service      = Item(C.PAM_SERVICE)
+	User         = Item(C.PAM_USER)
+	UserPrompt   = Item(C.PAM_USER_PROMPT)
+	Tty          = Item(C.PAM_TTY)
+	RemoteUser   = Item(C.PAM_RUSER)
+	RemoteHost   = Item(C.PAM_RHOST)
+	AuthToken    = Item(C.PAM_AUTHTOK)
+	OldAuthToken = Item(C.PAM_OLDAUTHTOK)
 )
 
 var handlers = struct {

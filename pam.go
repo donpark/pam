@@ -34,3 +34,15 @@ func (h Handle) GetUser() (string, error) {
 	}
 	return C.GoString(usr), nil
 }
+
+// GetItem for accessing and retrieving pam information of item type
+func (h Handle) GetItem(item Item) (string, error) {
+	var ret *C.char
+
+	e := C.pam_get_item(h.pamh, C.int(item), &ret)
+	if Value(e) != Success {
+		return "", pamError{h.pamh, e}
+	}
+
+	return C.GoString(ret), nil
+}
