@@ -30,7 +30,7 @@ func (h Handle) GetUser() (string, error) {
 	e := C.pam_get_user(h.pamh, &usr, nil)
 
 	if Value(e) != Success {
-		return C.GoString(usr), nil
+		return "", pamError{h.pamh, e}
 	}
-	return "", pamError{h.pamh, e}
+	return C.GoString(usr), nil
 }
