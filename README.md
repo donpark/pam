@@ -3,6 +3,10 @@
 PAM interaction for Go.  Currently consists of functionality to implement your own module
 for PAM to load/communicate with for each service.
 
+## Install
+
+> `go get zro.io/pam`
+
 ## Credits
 
 I looked off of [golang-pam-auth](https://github.com/AmandaCameron/golang-pam-auth) a bit for
