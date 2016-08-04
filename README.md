@@ -7,3 +7,4 @@ for PAM to load/communicate with for each service.
 
 I looked off of [golang-pam-auth](https://github.com/AmandaCameron/golang-pam-auth) a bit for
 initial coding of pam method translations.  Thanks has to go out to Amanda for her work here.
+The conversation code is mostly pulled directly from hers.
