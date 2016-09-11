@@ -5,7 +5,7 @@ for PAM to load/communicate with for each service.
 
 ## Install
 
-> `go get zro.io/pam`
+> `go get github.com/zro/pam`
 
 ## Credits
 
