@@ -113,10 +113,12 @@ func (a Args) add(arg string) {
 
 // turns our wonderful **C.char into []string
 func translateArguments(argc C.int, argv **C.char) Args {
-	length := int(argc)
-	ptrSlice := (*[1 << 30]*C.char)(unsafe.Pointer(argv))[:length:length]
 	ret := Args{}
-
+	length := int(argc)
+	if length == 0 || argv == nil {
+		return ret // argv could be nil
+	}
+	ptrSlice := (*[1 << 30]*C.char)(unsafe.Pointer(argv))[:length:length]
 	for _, ptr := range ptrSlice {
 		ret.add(C.GoString(ptr))
 	}
