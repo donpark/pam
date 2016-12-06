@@ -42,7 +42,7 @@ Declare PAM request handling methods like this:
 
 Build custom PAM shared library
 
-  go build -buildmode=c-shared -o /lib64/security/pam_mypam.so main.go
+    go build -buildmode=c-shared -o /lib64/security/pam_mypam.so main.go
 
 For 32-bit env, `/lib/security` directory should be used.
 
