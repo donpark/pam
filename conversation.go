@@ -51,7 +51,7 @@ type Message struct {
 // Conversation passes on the specified messages.
 func (hdl Handle) Conversation(_msgs ...Message) ([]string, error) {
 	if len(_msgs) == 0 {
-		return nil, errors.New("Must pass at least one Message.")
+		return nil, errors.New("must pass at least one Message")
 	}
 
 	msg := []*C.struct_pam_message{}
