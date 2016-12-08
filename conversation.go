@@ -50,28 +50,38 @@ type Message struct {
 
 // Conversation passes on the specified messages.
 func (hdl Handle) Conversation(_msgs ...Message) ([]string, error) {
-	if len(_msgs) == 0 {
+	n := len(_msgs)
+	if n == 0 {
 		return nil, errors.New("must pass at least one Message")
 	}
 
-	msg := []*C.struct_pam_message{}
-	resp := []*C.struct_pam_response{}
+	msgs := []*C.struct_pam_message{}
+	resps := []*C.struct_pam_response{}
 
 	for _, _msg := range _msgs {
-		msgStruct := &C.struct_pam_message{msg_style: C.int(_msg.Style), msg: C.CString(_msg.Msg)}
+		// use malloc to allocate C structs to dodge stricter Go 1.6 cgo rules
+		// which forbids nested Go pointers
+		msgStruct := (*C.struct_pam_message)(C.malloc(C.sizeof_struct_pam_message))
+		msgStruct.msg_style = C.int(_msg.Style)
+		msgStruct.msg = C.CString(_msg.Msg)
 		defer C.free(unsafe.Pointer(msgStruct.msg))
+		defer C.free(unsafe.Pointer(msgStruct))
 
-		msg = append(msg, msgStruct)
-		resp = append(resp, &C.struct_pam_response{})
+		// same for response
+		respStruct := C.malloc(C.sizeof_struct_pam_response)
+		defer C.free(respStruct)
+
+		msgs = append(msgs, ((*C.struct_pam_message)(unsafe.Pointer(msgStruct))))
+		resps = append(resps, ((*C.struct_pam_response)(respStruct)))
 	}
 
-	code := C.do_conv(hdl.pamh, C.int(len(_msgs)), &msg[0], &resp[0])
+	code := C.do_conv(hdl.pamh, C.int(len(_msgs)), &msgs[0], &resps[0])
 	if code != C.PAM_SUCCESS {
 		return nil, fmt.Errorf("Got non-success from the function: %d", code)
 	}
 
 	var ret []string
-	for _, r := range resp {
+	for _, r := range resps {
 		ret = append(ret, C.GoString(r.resp))
 		C.free(unsafe.Pointer(r.resp))
 	}
