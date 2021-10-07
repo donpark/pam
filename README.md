@@ -1,3 +1,12 @@
+## NOTE by @donpark
+
+Noticed only just now that connection to original project is not there,
+perhaps because it has been removed for reasons unknown to me.
+At least the original LICENSE is there.
+
+This note is to make it clear that most of the code is by @zacheryph and
+I only fixed some build errors to get it working.
+
 # pam
 
 PAM interaction for Go.  Currently consists of functionality to implement your own module
@@ -5,7 +14,7 @@ for PAM to load/communicate with for each service.
 
 ## Install
 
-> `go get github.com/zro/pam`
+> `go get github.com/donpark/pam`
 
 ## Usage
 
